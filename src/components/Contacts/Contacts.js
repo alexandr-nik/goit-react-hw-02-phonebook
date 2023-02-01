@@ -8,7 +8,12 @@ import {
   ContactsButton,
 } from './Contacts.module';
 import { ContactsFilter } from 'components/ContactsFilter';
-export const Contacts = ({ state, onClickDelete, filterHandle,onClickEdit }) => {
+export const Contacts = ({
+  state,
+  onClickDelete,
+  filterHandle,
+  onClickEdit,
+}) => {
   const { filter, contacts } = state;
   return (
     <ContactsBlock>
@@ -56,12 +61,12 @@ export const Contacts = ({ state, onClickDelete, filterHandle,onClickEdit }) => 
                     delete
                   </ContactsButton>
                   <ContactsButton
-                  type="button"
-                  value={item.id}
-                  onClick={onClickEdit}
-                >
-                 edit
-                </ContactsButton>
+                    type="button"
+                    value={item.id}
+                    onClick={onClickEdit}
+                  >
+                    edit
+                  </ContactsButton>
                 </ContactsItem>
               );
             })}

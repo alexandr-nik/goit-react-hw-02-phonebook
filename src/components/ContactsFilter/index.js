@@ -1,1 +1,1 @@
-export {ContactsFilter} from './ContactsFilter'
+export { ContactsFilter } from './ContactsFilter';

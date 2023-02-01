@@ -1,1 +1,1 @@
-export {ContactsForm} from './ContactForm'
+export { ContactsForm } from './ContactForm';

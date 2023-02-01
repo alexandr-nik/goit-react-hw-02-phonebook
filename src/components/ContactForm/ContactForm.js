@@ -5,18 +5,17 @@ import {
   PhonebookForm,
   PhonebookLable,
   PhonebookInput,
-  PhonebookButton
+  PhonebookButton,
 } from './ContactForm.module';
 export const ContactsForm = ({
   state: { name, number, changeContact },
   inputHandle,
   formSubmit,
-  
 }) => {
   return (
     <Phonebook>
       <PhonebookTitle>Phonebook</PhonebookTitle>
-      <PhonebookForm  onSubmit={formSubmit}>
+      <PhonebookForm onSubmit={formSubmit}>
         <PhonebookLable>
           Name
           <PhonebookInput
@@ -43,7 +42,9 @@ export const ContactsForm = ({
             onChange={inputHandle}
           />
         </PhonebookLable>
-        <PhonebookButton type="submit">{changeContact ? "Edit contact":"Add contact"}</PhonebookButton>
+        <PhonebookButton type="submit">
+          {changeContact ? 'Edit contact' : 'Add contact'}
+        </PhonebookButton>
       </PhonebookForm>
     </Phonebook>
   );
