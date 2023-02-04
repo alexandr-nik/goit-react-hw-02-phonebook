@@ -6,7 +6,7 @@ import {
   PhonebookLable,
   PhonebookInput,
   PhonebookButton,
-} from './ContactForm.module';
+} from './ContactForm.styled';
 export const ContactsForm = ({
   state: { name, number, changeContact },
   inputHandle,
@@ -21,7 +21,7 @@ export const ContactsForm = ({
           <PhonebookInput
             type="text"
             name="name"
-            placeholder="FirstName  LastName"
+            placeholder="Name  Surname"
             pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
             title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
             required

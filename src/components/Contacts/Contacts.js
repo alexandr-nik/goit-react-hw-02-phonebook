@@ -6,22 +6,18 @@ import {
   ContactsItem,
   ContactsText,
   ContactsButton,
-} from './Contacts.module';
+} from './Contacts.styled';
 import { ContactsFilter } from 'components/ContactsFilter';
-export const Contacts = ({
-  state,
-  onClickDelete,
-  filterHandle,
-  onClickEdit,
-}) => {
+export const Contacts = ({ state, onClickDelete, filterHandle }) => {
   const { filter, contacts } = state;
+  const filterName = filter.trim().toLowerCase();
   return (
     <ContactsBlock>
       <ContactsTile>Contacts</ContactsTile>
       <ContactsFilter state={state} filterHandle={filterHandle} />
       <ContactsList>
         {filter.length === 0 &&
-          contacts.map(item => {
+          contacts.map((item, index) => {
             return (
               <ContactsItem key={item.id}>
                 <ContactsText>{item.name}</ContactsText>
@@ -29,25 +25,16 @@ export const Contacts = ({
                 <ContactsButton
                   type="button"
                   value={item.id}
-                  onClick={onClickDelete}
+                  onClick={e => onClickDelete(e, index)}
                 >
                   delete
-                </ContactsButton>
-                <ContactsButton
-                  type="button"
-                  value={item.id}
-                  onClick={onClickEdit}
-                >
-                  edit
                 </ContactsButton>
               </ContactsItem>
             );
           })}
         {filter.length >= 1 &&
           contacts
-            .filter(elem =>
-              elem.name.toLowerCase().includes(filter.trim().toLowerCase())
-            )
+            .filter(elem => elem.name.toLowerCase().includes(filterName))
             .map(item => {
               return (
                 <ContactsItem key={item.id}>
@@ -56,16 +43,9 @@ export const Contacts = ({
                   <ContactsButton
                     type="button"
                     value={item.id}
-                    onClick={onClickDelete}
+                    onClick={e => onClickDelete(e, item.id)}
                   >
                     delete
-                  </ContactsButton>
-                  <ContactsButton
-                    type="button"
-                    value={item.id}
-                    onClick={onClickEdit}
-                  >
-                    edit
                   </ContactsButton>
                 </ContactsItem>
               );

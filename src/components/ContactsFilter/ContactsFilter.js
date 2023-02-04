@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { FilterBlock, FilterTitle, FilterInput } from './ContactsFiltermodule';
+import { FilterBlock, FilterTitle, FilterInput } from './ContactsFilter.styled';
 export const ContactsFilter = ({ state: { filter }, filterHandle }) => {
   return (
     <FilterBlock>

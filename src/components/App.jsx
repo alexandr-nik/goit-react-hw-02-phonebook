@@ -2,7 +2,7 @@ import { Component } from 'react';
 import { nanoid } from 'nanoid';
 import { ContactsForm } from './ContactForm';
 import { Contacts } from './Contacts';
-import { AppBlock } from './App.module';
+import { AppBlock } from './App.styled';
 
 export class App extends Component {
   state = {
@@ -15,69 +15,23 @@ export class App extends Component {
     filter: '',
     name: '',
     number: '',
-    changeContact: false,
-    changeContactId: '',
   };
 
-  onClickDelete = e => {
-    const indexOnDel = this.state.contacts.findIndex(
-      elem => e.target.value === elem.id
-    );
-    const delContact = this.state.contacts.filter(
-      (elem, index) => index !== indexOnDel
-    );
-    this.setState(prevState => ({
-      ...prevState,
-      contacts: [...delContact],
+  onClickDelete = (e, index) => {
+    this.setState(({ contacts }) => ({
+      contacts: contacts.filter((elem, i) => i !== index),
     }));
   };
-  onClickEdit = e => {
-    const { contacts } = this.state;
-    const indexEdit = contacts.findIndex(elem => e.target.value === elem.id);
-    const editContact = contacts.filter((elem, index) => index === indexEdit);
-    this.setState(prevState => ({
-      ...prevState,
-      name: editContact[0].name,
-      number: editContact[0].number,
-      changeContact: true,
-      changeContactId: `${indexEdit}`,
-    }));
-  };
+
   inputHandle = e => {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
-  formEdit = e => {
-    e.preventDefault();
-    const { name, contacts, number, changeContactId } = this.state;
-    const changePerson = {
-      id: contacts[changeContactId].id,
-      name: name,
-      number: number,
-    };
-    const allContact = contacts;
-    allContact[changeContactId] = changePerson;
-    this.setState(prevState => ({
-      ...prevState,
-      contacts: [...allContact],
-      name: '',
-      number: '',
-      changeContact: false,
-      changeContactId: '',
-    }));
-  };
-  formSubmit = e => {
-    const { changeContact } = this.state;
-    const { formSubmitAdd, formEdit } = this;
-    changeContact ? formEdit(e) : formSubmitAdd(e);
-  };
 
-  formSubmitAdd = e => {
+  formSubmit = e => {
     e.preventDefault();
     const { name, contacts, number } = this.state;
-    const newContacts = contacts;
-    const findEnterContact = newContacts.filter(elem => elem.name === name);
-    if (findEnterContact.length) {
+    if (contacts.filter(elem => elem.name === name).length) {
       alert(`${name} is alredy in contacts`);
       return;
     }
@@ -86,41 +40,25 @@ export class App extends Component {
       name: name,
       number: number,
     };
-    newContacts.push(newPerson);
-    this.setState(prevState => ({
-      ...prevState,
-      contacts: [...newContacts],
+    this.setState(({ contacts }) => ({
+      contacts: [...contacts, newPerson],
       name: '',
       number: '',
     }));
   };
-  filterHandle = e => {
-    const { name, value } = e.currentTarget;
-    this.setState({ [name]: value });
-  };
   render() {
-    const {
-      state,
-      inputHandle,
-      formSubmit,
-      formEdit,
-      filterHandle,
-      onClickDelete,
-      onClickEdit,
-    } = this;
+    const { state, inputHandle, formSubmit, onClickDelete } = this;
     return (
       <AppBlock>
         <ContactsForm
           state={state}
           inputHandle={inputHandle}
           formSubmit={formSubmit}
-          formEdit={formEdit}
         />
         <Contacts
           state={state}
           onClickDelete={onClickDelete}
-          filterHandle={filterHandle}
-          onClickEdit={onClickEdit}
+          filterHandle={inputHandle}
         />
       </AppBlock>
     );
