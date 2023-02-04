@@ -4,7 +4,7 @@ export const PhonebookTitle = styled.h1`
   text-align: center;
   font-size: 25px;
   margin: 0;
-  margin-bottom: 30px;
+  margin: 20px 0;
 `;
 export const PhonebookForm = styled.form`
   width: 350px;
@@ -15,7 +15,7 @@ export const PhonebookForm = styled.form`
   gap: 20px;
   margin: 0 auto;
   padding: 20px;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 export const PhonebookLable = styled.label`
   font-size: 16px;

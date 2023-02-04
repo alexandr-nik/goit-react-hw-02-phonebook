@@ -1,4 +1,5 @@
-import PropTypes from 'prop-types';
+import { Component } from 'react';
+import { nanoid } from 'nanoid';
 import {
   Phonebook,
   PhonebookTitle,
@@ -7,53 +8,72 @@ import {
   PhonebookInput,
   PhonebookButton,
 } from './ContactForm.styled';
-export const ContactsForm = ({
-  state: { name, number, changeContact },
-  inputHandle,
-  formSubmit,
-}) => {
-  return (
-    <Phonebook>
-      <PhonebookTitle>Phonebook</PhonebookTitle>
-      <PhonebookForm onSubmit={formSubmit}>
-        <PhonebookLable>
-          Name
-          <PhonebookInput
-            type="text"
-            name="name"
-            placeholder="Name  Surname"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-            value={name}
-            onChange={inputHandle}
-          />
-        </PhonebookLable>
-        <PhonebookLable>
-          Phone
-          <PhonebookInput
-            type="tel"
-            name="number"
-            placeholder="123-45-67"
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-            value={number}
-            onChange={inputHandle}
-          />
-        </PhonebookLable>
-        <PhonebookButton type="submit">
-          {changeContact ? 'Edit contact' : 'Add contact'}
-        </PhonebookButton>
-      </PhonebookForm>
-    </Phonebook>
-  );
-};
-ContactsForm.protoType = {
-  state: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    number: PropTypes.string.isRequired,
-  }).isRequired,
-  inputHandle: PropTypes.func.isRequired,
-  formSubmit: PropTypes.func.isRequired,
-};
+export class ContactsForm extends Component {
+  state = {
+    addName: '',
+    addNumber: '',
+  };
+  inputHandle = e => {
+    const { name, value } = e.currentTarget;
+    this.setState({ [name]: value });
+  };
+  formSubmit = e => {
+    e.preventDefault();
+    const {
+      state: { contacts },
+      addContact,
+    } = this.props;
+    const { addName, addNumber } = this.state;
+    if (contacts.filter(elem => elem.name === addName).length) {
+      alert(`${addName} is alredy in contacts`);
+      return;
+    }
+    const newContact = {
+      id: nanoid(),
+      name: addName,
+      number: addNumber,
+    };
+    addContact(newContact);
+    this.setState({
+      addName: '',
+      addNumber: '',
+    });
+  };
+  render() {
+    const { addName, addNumber } = this.state;
+    return (
+      <Phonebook>
+        <PhonebookTitle>Phonebook</PhonebookTitle>
+        <PhonebookForm onSubmit={this.formSubmit}>
+          <PhonebookLable>
+            Name
+            <PhonebookInput
+              type="text"
+              name="addName"
+              placeholder="Name  Surname"
+              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
+              required
+              value={addName}
+              onChange={this.inputHandle}
+            />
+          </PhonebookLable>
+          <PhonebookLable>
+            Phone
+            <PhonebookInput
+              type="tel"
+              name="addNumber"
+              placeholder="123-45-67"
+              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
+              required
+              value={addNumber}
+              onChange={this.inputHandle}
+            />
+          </PhonebookLable>
+          <PhonebookButton type="submit">Add contact</PhonebookButton>
+        </PhonebookForm>
+      </Phonebook>
+    );
+  }
+}
