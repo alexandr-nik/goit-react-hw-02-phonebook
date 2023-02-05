@@ -19,10 +19,9 @@ export class App extends Component {
     const { name, value } = e.currentTarget;
     this.setState({ [name]: value });
   };
-  onClickDelete = (e,id) => {
-    console.log(id)
+  onClickDelete = (e, id) => {
     this.setState(({ contacts }) => ({
-      contacts: contacts.filter((elem) => elem.id !== id),
+      contacts: contacts.filter(elem => elem.id !== id),
     }));
   };
   addContact = newContact => {
