@@ -11,7 +11,7 @@ export const Contacts = ({ contacts, onClickDelete }) => {
   return (
     <ContactsBlock>
       <ContactsList>
-        {contacts.map((item, index) => {
+        {contacts.map((item) => {
           return (
             <ContactsItem key={item.id}>
               <ContactsText>{item.name}</ContactsText>
@@ -19,7 +19,7 @@ export const Contacts = ({ contacts, onClickDelete }) => {
               <ContactsButton
                 type="button"
                 value={item.id}
-                onClick={e => onClickDelete(e, index)}
+                onClick={e => onClickDelete(e, item.id)}
               >
                 delete
               </ContactsButton>
