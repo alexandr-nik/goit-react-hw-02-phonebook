@@ -19,25 +19,24 @@ export class ContactsForm extends Component {
   };
   formSubmit = e => {
     e.preventDefault();
-    const {
-      state: { contacts },
-      addContact,
-    } = this.props;
+    const { addContact } = this.props;
     const { addName, addNumber } = this.state;
-    if (contacts.filter(elem => elem.name === addName).length) {
-      alert(`${addName} is alredy in contacts`);
-      return;
-    }
+    const { contacts } = this.props.state;
+    const prevContacts = contacts;
     const newContact = {
       id: nanoid(),
       name: addName,
       number: addNumber,
-    };
+    };   
     addContact(newContact);
-    this.setState({
-      addName: '',
-      addNumber: '',
-    });
+    setTimeout(() => {
+      if (this.props.state.contacts !== prevContacts) {
+        this.setState({
+          addName: '',
+          addNumber: '',
+        });
+      }
+    }, 0);
   };
   render() {
     const { addName, addNumber } = this.state;
