@@ -50,21 +50,16 @@ export class App extends Component {
       onClickDelete,
       findFilterContact,
     } = this;
-    const { contacts, filter } = this.state;
     return (
       <AppBlock>
         <ContactsForm state={state} addContact={addContact} />
         <Section title="Contacts">
           <ContactsFilter state={state} filterHandle={filterHandle} />
-          {filter.trim().length === 0 ? (
-            <Contacts contacts={contacts} onClickDelete={onClickDelete} />
-          ) : (
-            <Contacts
+          <Contacts
               contacts={findFilterContact()}
               onClickDelete={onClickDelete}
             />
-          )}
-        </Section>
+          </Section>
       </AppBlock>
     );
   }
